@@ -16,12 +16,12 @@ const Exchanges = () => {
     setPage(page);
     setLoading(true);
   }
-  const btns= new Array(132).fill(1)
+  const btns= new Array(4).fill(1)
 
   useEffect(() => {
     const fetchExchanges = async () => {
       try {
-        const { data } = await axios.get(`${server}/exchanges`);
+        const { data } = await axios.get(`${server}/exchanges/?page=${page}`);
         setExchanges(data);
         setLoading(false);
       } catch (error) {
@@ -58,7 +58,7 @@ const Exchanges = () => {
               </a>
             ))}
           </HStack>
-          <HStack w='full' overflowX={'auto'} p={'8'}>
+          <HStack w='full' overflowX={'auto'} p={'8'} justifyContent='center'>
             {
               btns.map((item,index)=>(
                 <Button key={index} bgColor={'blackAlpha.900'} color={'white'} onClick={()=>changePage(index+1)}>{index+1}</Button>

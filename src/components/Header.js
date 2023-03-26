@@ -1,23 +1,28 @@
-import { Button, HStack, useDisclosure } from '@chakra-ui/react'
+import { Button, Flex, Box, Spacer } from '@chakra-ui/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Header = () => {
   return (
     <>
-    <HStack p={'4'} shadow={'base'} bgColor={'blackAlpha.900'} >
-        <Button variant={'unstyled'} color={'white'}>
-            <Link to={'/'}>Home</Link>
-        </Button>
-        <Button variant={'unstyled'} color={'white'}>
-            <Link to={'/exchanges'}>Exchanges</Link>
-        </Button>
-        <Button variant={'unstyled'} color={'white'}>
-            <Link to={'/coins'}>Coins</Link>
-        </Button>
-    </HStack>
+      <Flex bgColor={'blackAlpha.900'} p={'5'}>
+        <Box>
+          <Button variant={'unstyled'} color={'white'}>
+            <Link to={'/'} style={{ fontSize: 'x-large' }}>Home</Link>
+          </Button>
+        </Box>
+        <Spacer />
+        <Box>
+          <Button variant={'unstyled'} color={'white'}>
+            <Link to={'/exchanges'} style={{ fontSize: 'larger' }}>Exchanges</Link>
+          </Button>
+          <Button variant={'unstyled'} color={'white'} marginLeft={'10'} marginRight={'10'}>
+            <Link to={'/coins'} style={{ fontSize: 'larger' }}>Coins</Link>
+          </Button>
+        </Box>
+      </Flex>
     </>
   )
 }
 
-export default Header
+export default Header 
