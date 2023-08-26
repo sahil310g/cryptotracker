@@ -18,6 +18,8 @@ const Exchanges = () => {
   }
   const btns= new Array(4).fill(1)
 
+  const totalPages = 4;
+
   useEffect(() => {
     const fetchExchanges = async () => {
       try {
@@ -33,6 +35,18 @@ const Exchanges = () => {
   }, [page])
 
   if(error) return <ErrorComponent message={'Error while fetching exchanges'} />
+
+  const handlePrevClick = () => {
+    if (page > 0) {
+      setPage(page - 1);
+    }
+  };
+
+  const handleNextClick = () => {
+    if (page < totalPages - 1) {
+      setPage(page + 1);
+    }
+  };
 
   return (
 
@@ -59,11 +73,29 @@ const Exchanges = () => {
             ))}
           </HStack>
           <HStack w='full' overflowX={'auto'} p={'8'} justifyContent='center'>
-            {
+            {/* {
               btns.map((item,index)=>(
                 <Button key={index} bgColor={'blackAlpha.900'} color={'white'} onClick={()=>changePage(index+1)}>{index+1}</Button>
 
               ))
+            } */}
+            {page>1 &&
+              <Button onClick={handlePrevClick} disabled={page === 0}>
+                Previous
+              </Button>
+            }
+            { page>1 && 
+            <Button bgColor={'blackAlpha.900'} color={'white'} onClick={() => changePage(page - 1)}>{page-1}</Button>
+            }
+            <Button bgColor={'blackAlpha.500'} color={'white'}>{page}</Button>
+            { page<3 && 
+            <Button bgColor={'blackAlpha.900'} color={'white'} onClick={() => changePage(page + 1)}>{page + 1}</Button>
+            }
+
+            {page < 3 &&
+              <Button onClick={handleNextClick} disabled={page === totalPages - 1}>
+                Next
+              </Button>
             }
           </HStack>
         </>

@@ -1,4 +1,4 @@
-import { Avatar, Box, Image, Stack, Text, VStack } from '@chakra-ui/react'
+import { Box, Image, Stack, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 import profile from '../assets/Photo.jpeg'
 
