@@ -11,10 +11,12 @@ const CoinDetails = () => {
   const [coin, setCoin] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [isProbability, setIsProbability] = useState(true);
   const [currency, setCurrency] = useState("inr");
   const [chartArray, setChartArray] = useState([]);
   const [days, setDays] = useState("24h");
-  const params = useParams()
+  const params = useParams();
+  const [score, setScore] = useState(0.3345);
 
   const btns = ['24h', '7d', '14d', '30d', '60d', '200d', '1y', 'max'];
 
@@ -77,6 +79,18 @@ const CoinDetails = () => {
     fetchCoin();
   }, [params.id, currency, days])
 
+  useEffect(()=>{
+    const fetchScore = async()=>{
+      try{
+        const {scr} = await axios.get(`https://cryptotracker-backend-production.up.railway.app/trends/posts?coin=${params.id}`)
+        setScore(scr.score);
+      } catch(error){
+        setIsProbability(false);
+      }
+    }
+    fetchScore();
+  },[coin])
+
   if (error) return <ErrorComponent message={'Error while fetching coin'} />
 
   return (
@@ -84,6 +98,14 @@ const CoinDetails = () => {
       {
         loading ? <Loader /> : (
           <>
+{ isProbability && 
+            <Box height={'fit-content'} borderWidth={2} padding={10} >
+              <Text fontSize={'3xl'}>Market Sentiment Analysis : {score*100}% Positive</Text>
+              <Progress value={score*100} colorScheme={'red'} w={'full'} />
+
+
+            </Box>
+            }
             <Box borderWidth={1} width={'full'}>
 
               <Chart arr={chartArray} currency={currencySymbol} days={days} />
