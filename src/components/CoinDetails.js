@@ -11,7 +11,7 @@ const CoinDetails = () => {
   const [coin, setCoin] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [isProbability, setIsProbability] = useState(true);
+  const [isProbability, setIsProbability] = useState(false);
   const [currency, setCurrency] = useState("inr");
   const [chartArray, setChartArray] = useState([]);
   const [days, setDays] = useState("24h");
@@ -82,8 +82,9 @@ const CoinDetails = () => {
   useEffect(()=>{
     const fetchScore = async()=>{
       try{
-        const {scr} = await axios.get(`https://cryptotracker-backend-production.up.railway.app/trends/posts?coin=${params.id}`)
-        setScore(scr.score);
+        const scr = await axios.get(`https://cryptotracker-backend-production.up.railway.app/trends/posts?coin=${params.id}`)
+        setScore(scr.data.score);
+        setIsProbability(true);
       } catch(error){
         setIsProbability(false);
       }
@@ -100,7 +101,7 @@ const CoinDetails = () => {
           <>
 { isProbability && 
             <Box height={'fit-content'} borderWidth={2} padding={10} >
-              <Text fontSize={'3xl'}>Market Sentiment Analysis : {score*100}% Positive</Text>
+              <Text fontSize={'3xl'}>Market Sentiment Analysis : {(score*100).toFixed(2)}% Positive</Text>
               <Progress value={score*100} colorScheme={'red'} w={'full'} />
 
 
